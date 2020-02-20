@@ -3,14 +3,16 @@
  * @Author: andy.ten@tom.com
  * @Date: 2020-02-18 21:35:49
  * @LastEditors: andy.ten@tom.com
- * @LastEditTime: 2020-02-20 00:57:11
+ * @LastEditTime: 2020-02-20 21:13:28
  * @Version: 1.0.0
  * @FilePath: /nodejs-pro/Users/xukaixing/project/resource/webpack4-pro/webpack.config.js
  */
 // webpack.config.js
+'use strict';
 const path = require('path');
 const webpack = require('webpack'); // 这个插件不需要安装，是基于webpack的，需要引入webpack模块
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 引入CleanWebpackPlugin插件
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 引入分离css插件
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 引入HtmlWebpackPlugin插件
 module.exports = {
   entry: path.join(__dirname, '/src/index.js'), // 入口文件,path.join的功能是拼接路径片段
@@ -29,8 +31,27 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/, // 正则匹配以.css结尾的文件
-        use: ['style-loader', 'css-loader'] // 需要用的loader，一定是这个顺序，因为调用loader是从右往左编译的
+        test: /\.css$/, // 正则匹配以.css结尾的文件,需要用的loader，一定是这个顺序，因为调用loader是从右往左编译的
+        // use: [
+        //   { loader: 'style-loader' }, // 这里采用的是对象配置loader的写法
+        //   { loader: 'css-loader' },
+        //   { loader: 'postcss-loader' } // 使用postcss-loader
+        // ]
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              url: false
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              url: false
+            }
+          }
+        ]
       },
       {
         test: /\.(scss|sass)$/, // 正则匹配以.scss和.sass结尾的文件
@@ -40,11 +61,6 @@ module.exports = {
         test: /(\.jsx|\.js)$/,
         use: { // 注意use选择如果有多项配置，可写成这种对象形式
           loader: 'babel-loader'
-          // options: {
-          //   presets: [
-          //     'env', 'react'
-          //   ]
-          // }
         },
         exclude: /node_modules/ // 排除匹配node_modules模块
       }
