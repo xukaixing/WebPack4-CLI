@@ -1,0 +1,14 @@
+/build
+/config
+/static
+/public
+/dist
+!**/.eslintrc*
+/node_modules
+*.svg
+*.ico
+*.json
+.gitignore
+*.md
+*.log
+*.lock

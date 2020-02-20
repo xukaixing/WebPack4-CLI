@@ -1,0 +1,4 @@
+// .babelrc 使用时把注释删掉，该文件不能添加注释,作用是优化babel
+{
+  "presets": ["env", "react"]
+}
