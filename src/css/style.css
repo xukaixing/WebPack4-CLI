@@ -1,4 +1,10 @@
 /* style.css */
 body {
-  background: gray;
+  background: #999;
+}
+
+#root div{
+  width: 200px;
+  margin-top: 50px;
+  transform: rotate(45deg); /*这个属性会产生前缀*/
 }
