@@ -3,7 +3,7 @@
  * @Author: andy.ten@tom.com
  * @Date: 2020-02-20 10:47:50
  * @LastEditors: andy.ten@tom.com
- * @LastEditTime: 2020-02-21 15:17:36
+ * @LastEditTime: 2020-02-21 15:22:35
  * @Version: 1.0.0
  */
 // webpack.prod.js
@@ -55,7 +55,7 @@ const webpackProdConfig = merge(baseWebpackConfig, { // 将webpack.common.js合�
     // 默认为false,runtime相关的代码(各个模块之间的引用和加载的逻辑)内嵌入每个entry
     // multiple：对于每个entry会生成runtime~${entrypoint.name}的文件。
     // 'single': 会生成一个唯一单独的runtime.js文件，就是manifest,描述的是加载引用的逻辑关系
-    runtimeChunk: 'multiple',
+    runtimeChunk: 'single',
     // 可以自定义UglifyJsPlugin和一些配置,默认的压缩为uglifyjs-webpack-plugin
     // 如果想使用第三方的压缩插件也可以在optimization.minimizer的数组列表中进行配置
     minimizer: [
