@@ -1,9 +1,9 @@
 /*
- * @Description:
+ * @Description:webpack开发环境配置
  * @Author: andy.ten@tom.com
  * @Date: 2020-02-20 10:47:39
  * @LastEditors: andy.ten@tom.com
- * @LastEditTime: 2020-02-21 00:04:29
+ * @LastEditTime: 2020-02-21 13:38:19
  * @Version: 1.0.0
  */
 'use strict';
@@ -24,8 +24,9 @@ const PORT = process.env.PORT || config.dev.port;
 const webpackDevConfig = merge(baseWebpackConfig, { // 将webpack.base.js合并到当前文件
   mode: 'development',
   module: {
-    //添加css格式规则
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: false })
+    // 添加css格式规则
+    // 添加css格式规则
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
   },
   devtool: config.dev.devtool,
   devServer: {
@@ -40,18 +41,18 @@ const webpackDevConfig = merge(baseWebpackConfig, { // 将webpack.base.js合并�
       warnings: false,
       errors: true // webpack 在编译的时候如果出现了错误，可以在网页上显示
     },
-    open: config.dev.autoOpenBrowser, // 设置是否自动打开浏览器
+    open: config.dev.autoOpenBrowser // 设置是否自动打开浏览器
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(), // 热更新插件
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({ // 自动生成html文件
       filename: 'index.html',
       template: path.join(__dirname, '../src/index.template.html'),
       inject: true, // 在body的后面增加脚本
       templateParameters: {
         BASE_URL: config.dev.assetsPublicPath + config.dev.assetsSubDirectory
       }
-    }),
+    })
   ]
 });
 module.exports = webpackDevConfig;
