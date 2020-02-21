@@ -3,7 +3,7 @@
  * @Author: andy.ten@tom.com
  * @Date: 2020-02-20 10:47:50
  * @LastEditors: andy.ten@tom.com
- * @LastEditTime: 2020-02-21 15:22:35
+ * @LastEditTime: 2020-02-21 23:51:40
  * @Version: 1.0.0
  */
 // webpack.prod.js
@@ -87,7 +87,7 @@ const webpackProdConfig = merge(baseWebpackConfig, { // 将webpack.common.js合�
         cssProcessorOptions: config.build.productionSourceMap ? { safe: true, map: { inline: false }} : { safe: true }
       })
     ],
-    // 主要就是根据不同的策略来分割打包出来的bundle。
+    // 主要就是根据不同的代码包，来分割打包出来的bundle。
     splitChunks: {
       chunks: 'all', // 显示块的范围; async（默认）：分割异步打包的代码;all:同时分割同步和异步代码,推荐。
       cacheGroups: { // 设置缓存组用来抽取满足不同规则的chunk
@@ -165,4 +165,18 @@ const webpackProdConfig = merge(baseWebpackConfig, { // 将webpack.common.js合�
     new CleanWebpackPlugin() // 所要清理的文件夹名称dist
   ]
 });
+// 判断是否增加gzip压缩
+if (config.build.productionGzip) {
+  const CompressionWebpackPlugin = require('compression-webpack-plugin');
+  webpackProdConfig.plugins.push(
+    new CompressionWebpackPlugin({
+      // asset: '[path].gz[query]', //1.1版本
+      filename: '[path].gz[query]', // 目标资源名称。[path] 会被替换成原资路径，[query] 替换成原查询字符串
+      algorithm: 'gzip',
+      test: new RegExp('\\.(' + config.build.productionGzipExtensions.join('|') + ')$'),
+      threshold: 10240, // 单位为字节，只处理比10240字节=10K值大的资源
+      minRatio: 0.8// 只有压缩率比这个值小的资源才会被处理
+    })
+  );
+}
 module.exports = webpackProdConfig;
