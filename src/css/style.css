@@ -1,6 +1,7 @@
 /* style.css */
 body {
   background: #999;
+  background: url(../img/banner_03.jpg) top no-repeat;  /* 设为图片背景 */
 }
 
 #root div{
@@ -8,3 +9,4 @@ body {
   margin-top: 50px;
   transform: rotate(45deg); /*这个属性会产生前缀*/
 }
+
