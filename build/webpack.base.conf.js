@@ -3,7 +3,7 @@
  * @Author: andy.ten@tom.com
  * @Date: 2020-02-20 10:47:27
  * @LastEditors: andy.ten@tom.com
- * @LastEditTime: 2020-02-21 00:02:09
+ * @LastEditTime: 2020-02-21 15:17:49
  * @Version: 1.0.0
  */
 'use strict';
@@ -19,12 +19,13 @@ module.exports = {
     index2: path.join(__dirname, '../src/index2.js')
   },
   output: {
-    path: config.build.assetsRoot, // 打包后的文件存放的地方
+    path: config.build.assetsRoot, // 打包后的文件存放的地方dist文件夹
     filename: '[name].js',
+    // publicPath + 图片相对于output.path的路径
     publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   module: {
-    //base的loader不能与dev和prod的重复定义，否则会报错
+    // base的loader不能与dev和prod的重复定义，否则会报错
     rules: [
       // {
       //   test: /\.css$/,
@@ -38,13 +39,13 @@ module.exports = {
       // },
       {
         test: /\.(js|jsx)$/,
-        use: 'babel-loader?cacheDirectory',// 注意use选择如果有多项配置，可写成这种对象形式
+        use: 'babel-loader?cacheDirectory', // 注意use选择如果有多项配置，可写成这种对象形式
         include: [utils.resolve('src')],
         exclude: /node_modules/
-      },
+      }
     ]
   },
   plugins: [
-    new webpack.BannerPlugin('版权所有，翻版必究'), // new一个插件的实例
+    new webpack.BannerPlugin('copyright® andy.ten@tom.com') // new一个插件的实例
   ]
 };
