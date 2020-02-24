@@ -3,7 +3,7 @@
  * @Author: andy.ten@tom.com
  * @Date: 2020-02-20 10:47:39
  * @LastEditors: andy.ten@tom.com
- * @LastEditTime: 2020-02-21 13:38:19
+ * @LastEditTime: 2020-02-24 11:00:35
  * @Version: 1.0.0
  */
 'use strict';
@@ -14,6 +14,7 @@ const webpack = require('webpack'); // 这个插件不需要安装，是基于we
 const config = require('../config');
 const merge = require('webpack-merge'); // 引入webpack-merge功能模块
 const baseWebpackConfig = require('./webpack.base.conf.js'); // 引入webpack.base.js
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // 拷贝自定义静态文件插件
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 引入HtmlWebpackPlugin插件
 
 process.env.NODE_ENV = 'development';
@@ -52,7 +53,14 @@ const webpackDevConfig = merge(baseWebpackConfig, { // 将webpack.base.js合并�
       templateParameters: {
         BASE_URL: config.dev.assetsPublicPath + config.dev.assetsSubDirectory
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: config.dev.assetsSubDirectory,
+        ignore: ['.*']
+      }
+    ])
   ]
 });
 module.exports = webpackDevConfig;

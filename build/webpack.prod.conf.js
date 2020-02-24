@@ -3,7 +3,7 @@
  * @Author: andy.ten@tom.com
  * @Date: 2020-02-20 10:47:50
  * @LastEditors: andy.ten@tom.com
- * @LastEditTime: 2020-02-21 23:51:40
+ * @LastEditTime: 2020-02-24 10:59:40
  * @Version: 1.0.0
  */
 // webpack.prod.js
@@ -15,6 +15,7 @@ const config = require('../config');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf.js');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 引入CleanWebpackPlugin插件
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // 拷贝自定义静态文件插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 引入分离css插件
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 引入HtmlWebpackPlugin插件
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'); // 引入提取公共代码插件
@@ -162,6 +163,14 @@ const webpackProdConfig = merge(baseWebpackConfig, { // 将webpack.common.js合�
     // 如果引入了一个新文件或删掉一个文件，都可能会导致其它文件的 moduleId 发生改变，那这样缓存失效了。
     // HashedModuleIdsPlugin的原理是使用文件路径的作为 id，并将它 hash 之后作为 moduleId。
     new webpack.HashedModuleIdsPlugin(),
+    // 拷贝自定义的静态文件，如：图片等
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: config.build.assetsSubDirectory,
+        ignore: ['.*']
+      }
+    ]),
     new CleanWebpackPlugin() // 所要清理的文件夹名称dist
   ]
 });
