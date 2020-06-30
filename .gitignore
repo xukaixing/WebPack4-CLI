@@ -79,6 +79,5 @@ selenium-debug.log
 *.njsproj
 *.sln
 package.json.rej
-*.json
 package-lock.json
 yarn.lock
